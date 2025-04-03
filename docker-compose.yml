@@ -1,0 +1,21 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  app:
+    build: .
+    ports:
+      - "5100:5100"
+    environment:
+      - SECRET_KEY=your_secret_key
+      - MONGO_URI=mongodb://mongo:27017/
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:5
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongo_data:

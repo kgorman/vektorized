@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- This meta tag refreshes the page every 5 seconds -->
+    <meta http-equiv="refresh" content="5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Vektorized App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body {
+         background-color: #121212;
+         color: #ffffff;
+      }
+      .navbar {
+         background-color: #1f1f1f;
+      }
+      .navbar-brand {
+         color: #cccccc !important;
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+         <a class="navbar-brand" href="#">vektorized app</a>
+         <div class="d-flex align-items-center">
+           <form class="d-flex" action="/logout" method="post">
+             <button class="btn btn-outline-light" type="submit">Logout</button>
+           </form>
+         </div>
+      </div>
+    </nav>
+    <div class="container mt-5">
+      <h2>Print Farm Status</h2>
+      <p class="text-muted" style="font-size: smaller;">Record Count: {{ record_count }}</p>
+      
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Printer</th>
+            <th>State</th>
+            <th>Last Updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for status in statuses %}
+            <tr>
+              <td>{{ status.ruuvi_id }}</td>
+              <td>
+                {% if status.state == 'running' %}
+                  <span class="badge bg-success">Running</span>
+                {% else %}
+                  <span class="badge bg-secondary">Idle</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if status.timestamp %}
+                  {{ status.timestamp.strftime("%Y-%m-%d %H:%M:%S") }} UTC
+                {% else %}
+                  N/A
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
